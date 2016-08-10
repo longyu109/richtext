@@ -1,0 +1,20 @@
+## compile and build files
+*.class
+*.jar
+lib/
+target/
+/mobile/
+
+## editor backfiles
+*~
+.DS_Store
+
+## IDE project files
+.externalToolBuilders/
+.settings/
+.classpath
+.project
+*/.project
+.idea
+*.iml
+~
