@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
  * @return 返回截取后的字符串
  */
 
-public class StringCutHTML {
+public class StringCutHtml {
 
 	private static Map<String, Boolean> map = new HashMap<String, Boolean>();
 	static {
@@ -76,9 +76,22 @@ public class StringCutHTML {
 		// String temp_result = result.toString().replaceAll(
 		// "</?(AREA|BASE|BASEFONT|BODY|BR|COL|COLGROUP|DD|DT|FRAME|HEAD|HR|HTML|IMG|INPUT|ISINDEX|LI|LINK|META|OPTION|P|PARAM|TBODY|TD|TFOOT|TH|THEAD|TR|area|base|basefont|body|br|col|colgroup|dd|dt|frame|head|hr|html|img|input|isindex|li|link|meta|option|p|param|tbody|td|tfoot|th|thead|tr)[^<>]*/?>",
 		// "");
+		//取两个img
+		String str=result.toString();
+		Pattern p1 = Pattern.compile("(<img[^<>]*>)");
+		Matcher m1 = p1.matcher(str);
+		StringBuilder accum = new StringBuilder();
+		int count=0,endIndex=0;
+		while (m1.find()) {
+			if (++count == 2)
+				endIndex=m1.end();
+		}
+		String res=endIndex==0?str:str.substring(0,endIndex);
+		accum.append(res);
+		
 		// 去掉成对的HTML标记
 		
-		String temp_result=result.toString().replaceAll("<[ ]*/*[ ]*br[ ]*/*>", "");
+		String temp_result=res.replaceAll("<[ ]*/*[ ]*br[ ]*/*>", "");
 		temp_result = temp_result.replaceAll("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>", "$2");
 		temp_result=temp_result.replaceAll("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>", "$2");
 		// 用正则表达式取出标记
@@ -92,12 +105,12 @@ public class StringCutHTML {
 		}
 		// 补全不成对的HTML标记
 		for (int i = endHTML.size() - 1; i >= 0; i--) {
-			result.append("</");
-			result.append(endHTML.get(i));
-			result.append(">");
+			accum.append("</");
+			accum.append(endHTML.get(i));
+			accum.append(">");
 		}
 
-		return result.toString();
+		return accum.toString();
 	}
 
 }

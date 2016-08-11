@@ -135,7 +135,7 @@ public class RichTextFormatter {
 		StringBuilder accum = new StringBuilder();
 		boolean isCut = false;
 
-		String res = StringCutHTML.subStringHTML(fifStr, words, "");
+		String res = StringCutHtml.subStringHTML(fifStr, words, "");
 		accum.append(res);
 		if (fifStr.length() > accum.length()) {
 			// 0代表裁剪过
